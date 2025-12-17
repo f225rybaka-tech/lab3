@@ -5,8 +5,6 @@
 #include <windows.h>
 
 using namespace std;
-
-// ====================== CLASS PERSON ======================
 class Person {
 private:
     string surname;
@@ -14,11 +12,8 @@ private:
     string patronymic;
     char gender;
     int day, month, year;
-
 public:
     Person() : gender('Ч'), day(1), month(1), year(2000) {}
-
-    // ---------- ВСТАНОВЛЕННЯ ДАТИ ----------
     void setBirthDate(int d, int m, int y) {
         if (d < 1 || d > 31)
             throw invalid_argument("Невірний день");
@@ -26,7 +21,6 @@ public:
             throw invalid_argument("Невірний місяць");
         if (y < 1900 || y > 2025)
             throw out_of_range("Невірний рік");
-
         day = d;
         month = m;
         year = y;
@@ -36,21 +30,17 @@ public:
             throw invalid_argument("Стать повинна бути 'Ч' або 'Ж'");
         gender = g;
     }
-    // ---------- ВВІД ----------
     friend istream& operator>>(istream& in, Person& p) {
         cout << "Прізвище: ";
         in >> p.surname;
-
         cout << "Ім’я: ";
         in >> p.name;
-
         cout << "По батькові: ";
         in >> p.patronymic;
-
         char g;
         cout << "Стать (Ч/Ж): ";
         in >> g;
-        p.setGender(g);   // ← перевірка + throw
+        p.setGender(g);  
 
         int d, m, y;
         cout << "Дата народження (д м р): ";
@@ -62,8 +52,6 @@ public:
         p.setBirthDate(d, m, y);
         return in;
     }
-
-    // ---------- ВИВІД ----------
     friend ostream& operator<<(ostream& out, const Person& p) {
         out << "ПІБ: " << p.surname << " " << p.name << " " << p.patronymic << endl;
         out << "Стать: " << p.gender << endl;
@@ -72,23 +60,17 @@ public:
         out << "-----------------------------" << endl;
         return out;
     }
-
-    // ---------- МЕТОДИ ПОШУКУ ----------
     bool bySurname(const string& s) const { return surname == s; }
     bool byName(const string& n) const { return name == n; }
     bool byPatronymic(const string& p) const { return patronymic == p; }
     bool byGender(char g) const { return gender == g; }
     bool byYear(int y) const { return year == y; }
 };
-
-// ====================== MAIN ======================
 int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
-
     vector<Person> people;
     int choice;
-
     do {
         cout << "\n===== МЕНЮ =====\n";
         cout << "1. Додати особу\n";
@@ -101,7 +83,6 @@ int main() {
         cout << "0. Вихід\n";
         cout << "Ваш вибір: ";
         cin >> choice;
-
         try {
             if (choice == 1) {
                 Person p;
@@ -161,11 +142,8 @@ int main() {
         catch (...) {
             cout << "Невідома помилка!" << endl;
         }
-
         cin.clear();
         cin.ignore(1000, '\n');
-
     } while (choice != 0);
-
     return 0;
 }
